@@ -21,7 +21,6 @@ class Program
     }
 }
 
-
 class Character
 {
     private string name;
@@ -29,6 +28,9 @@ class Character
     private int power;
 
     private static int count = 0;
+
+    public string Name => name;
+    public int Hp => hp;
 
     public Character(string name, int hp, int power)
     {
@@ -56,25 +58,35 @@ class Character
         }
     }
 
+    public void TakeDamage(int damage)
+    {
+        hp = hp - damage;
+    }
+
+    public bool IsAlive()
+    {
+        return hp > 0;
+    }
+
     public void Attack(Character target)
     {
-        target.hp = target.hp - this.power;
-        Console.WriteLine(this.name + " атакует " + target.name + " на " + this.power + " урона.");
+        target.TakeDamage(this.power);
+        Console.WriteLine(this.Name + " атакует " + target.Name + " на " + this.power + " урона.");
     }
+
     public void GetStatus()
     {
-        Console.WriteLine(this.name + ": " + this.hp + " HP");
+        Console.WriteLine(this.Name + ": " + this.Hp + " HP");
     }
 }
-
 
 class Player : Character
 {
     public Player(string name, int hp, int power) : base(name, hp, power)
     {
+        
     }
 }
-
 
 class Enemy : Character
 {
