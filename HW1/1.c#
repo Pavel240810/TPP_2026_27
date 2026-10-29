@@ -1,0 +1,93 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void PrintBalance(double balance, string money = "P")
+    {
+        Console.WriteLine($"Баланс: {balance} {money}");
+    }
+
+    static double AddMoney(double balance, List<string> history)
+    {
+        Console.Write("Введите сумму: ");
+        double sum = Convert.ToDouble(Console.ReadLine());
+
+        if (sum > 0)
+        {
+            balance = balance + sum;
+            history.Add($"Пополнение: +{sum} P");
+        }
+        else
+        {
+            Console.WriteLine("Сумма должна быть больше нуля");
+        }
+
+        return balance;
+    }
+
+    static double TakeMoney(double balance, List<string> history)
+    {
+        Console.Write("Введите сумму: ");
+        double sum = Convert.ToDouble(Console.ReadLine());
+
+        if (sum > 0 && sum <= balance)
+        {
+            balance = balance - sum;
+            history.Add($"Снятие: -{sum} P");
+        }
+        else
+        {
+            Console.WriteLine("Нельзя снять эту сумму");
+        }
+
+        return balance;
+    }
+
+    static void PrintHistory(List<string> history)
+    {
+        for (int i = 0; i < history.Count; i++)
+        {
+            Console.WriteLine(history[i]);
+        }
+    }
+
+    static void Main()
+    {
+        Console.Write("Введите начальный баланс: ");
+        double balance = Convert.ToDouble(Console.ReadLine());
+
+        List<string> history = new List<string>();
+
+        int n = -1;
+
+        while (n != 0)
+        {
+            Console.WriteLine("1 - Баланс");
+            Console.WriteLine("2 - Пополнить");
+            Console.WriteLine("3 - Снять");
+            Console.WriteLine("4 - История");
+            Console.WriteLine("0 - Выход");
+
+            Console.Write("Выберите: ");
+            n = Convert.ToInt32(Console.ReadLine());
+
+            if (n == 1)
+            {
+                PrintBalance(balance);
+            }
+            else if (n == 2)
+            {
+                balance = AddMoney(balance, history);
+            }
+            else if (n == 3)
+            {
+                balance = TakeMoney(balance, history);
+            }
+            else if (n == 4)
+            {
+                PrintHistory(history);
+            }
+        }
+    }
+}
